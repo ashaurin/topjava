@@ -6,8 +6,7 @@ import ru.javawebinar.topjava.model.UserMealWithExcess;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.Month;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class UserMealsUtil {
     public static void main(String[] args) {
@@ -29,12 +28,37 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         // TODO return filtered list with excess. Implement by cycles
-        return null;
+        HashMap<LocalDateTime,Integer> map = new HashMap<>();
+        meals.forEach(userMeal ->
+            map.merge(userMeal.getDateTime(), userMeal.getCalories(), Integer::sum)
+        );
+        List<UserMealWithExcess> list = new ArrayList<>();
+        meals.forEach(userMeal -> {
+            LocalTime time = userMeal.getDateTime().toLocalTime();
+            if (time.isAfter(startTime) && time.isBefore(endTime))
+                list.add(new UserMealWithExcess(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), map.get(userMeal.getDateTime()) > caloriesPerDay));
+        });
+        return list;
     }
 
     public static List<UserMealWithExcess> filteredByStreams(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         // TODO Implement by streams
         System.out.println("TODO Implement by streams");
+/*
+        List<UserMealWithExcess> list = Arrays.asList(
+                meals.stream()
+                        .filter(Objects::nonNull)
+                        .map(this::doSomething)
+                        .toArray(String[]::new)
+        );
+ */
         return null;
     }
 }
+/*
+Внутри метода filteredByCycles надо сначала посчитать сумму калорий на каждую дату,
+которая есть в коллекции meals и сохранить это в новую коллекцию, например использовать HashMap,
+где ключем будет дата, а значением сумма калорий за день.
+Далее еще раз пройтись по всем значениям meals и взять те записи которые есть в нужном диапазоне даты и времени
+и прибавить значение excess которое мы можем получить из сравнения ранее полученного значения суммы калорий и аргумента caloriesPerDay
+ */
