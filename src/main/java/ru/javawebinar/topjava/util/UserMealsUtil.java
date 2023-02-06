@@ -33,7 +33,7 @@ public class UserMealsUtil {
 
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
         // TODO return filtered list with excess. Implement by cycles
-        HashMap<LocalDate,Integer> map = new HashMap<>();
+        Map<LocalDate,Integer> map = new HashMap<>();
 
         meals.forEach(userMeal ->
                 map.merge(userMeal.getDateTime().toLocalDate(), userMeal.getCalories(), Integer::sum)
@@ -53,7 +53,7 @@ public class UserMealsUtil {
         // TODO Implement by streams
         System.out.println("TODO Implement by streams");
 
-        HashMap<LocalDate,Integer> map = new HashMap<>();
+        Map<LocalDate,Integer> map = new HashMap<>();
 
         meals.forEach(userMeal ->
                 map.merge(userMeal.getDateTime().toLocalDate(), userMeal.getCalories(), Integer::sum)
