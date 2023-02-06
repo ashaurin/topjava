@@ -27,6 +27,8 @@ public class UserMealsUtil {
         mealsTo.forEach(System.out::println);
 
         System.out.println(filteredByStreams(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
+
+        System.out.println(filteredByStreams2(meals, LocalTime.of(7, 0), LocalTime.of(12, 0), 2000));
     }
 
     public static List<UserMealWithExcess> filteredByCycles(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
@@ -70,6 +72,31 @@ public class UserMealsUtil {
 
         return list;
     }
+
+    public static List<UserMealWithExcess> filteredByStreams2(List<UserMeal> meals, LocalTime startTime, LocalTime endTime, int caloriesPerDay) {
+        // TODO Implement by streams
+        System.out.println("TODO Implement by streams");
+
+        HashMap<LocalDate,Integer> map = new HashMap<>();
+
+        meals.forEach(userMeal ->
+                map.merge(userMeal.getDateTime().toLocalDate(), userMeal.getCalories(), Integer::sum)
+        );
+
+        List<UserMealWithExcess> list = new ArrayList<>();
+
+        meals
+                .stream()
+                .filter(userMeal -> {
+                    LocalTime time = userMeal.getDateTime().toLocalTime();
+                    return time.equals(startTime) || (time.isAfter(startTime)) && (time.isBefore(endTime));
+                })
+                .forEach(userMeal -> list.add(new UserMealWithExcess(userMeal.getDateTime(), userMeal.getDescription(), userMeal.getCalories(), map.get(userMeal.getDateTime().toLocalDate()) > caloriesPerDay))
+                );
+
+        return list;
+    }
+
 }
 /*
 Внутри метода filteredByCycles надо сначала посчитать сумму калорий на каждую дату,
