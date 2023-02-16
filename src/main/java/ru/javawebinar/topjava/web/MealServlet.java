@@ -23,10 +23,8 @@ public class MealServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("redirect to users");
 
-        //request.getParameter()
-
-//        request.getRequestDispatcher("/users.jsp").forward(request, response);
-        response.sendRedirect("meals.jsp");
+        request.getRequestDispatcher("/meals.jsp").forward(request, response);
+//        response.sendRedirect("meals.jsp");
     }
 }
 

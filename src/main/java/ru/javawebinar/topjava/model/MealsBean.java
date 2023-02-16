@@ -23,10 +23,6 @@ public class MealsBean {
 
     private final int caloriesPerDay = 2000;
 
-    public List<Meal> getMeals (){
-        return meals;
-    }
-
     public List<MealTo> getMealTo (){
         Map<LocalDate, Integer> caloriesSumByDate = meals.stream()
                 .collect(
