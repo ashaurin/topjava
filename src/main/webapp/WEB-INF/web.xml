@@ -5,7 +5,6 @@
          version="4.0">
 
     <display-name>TopJava</display-name>
-
     <servlet>
         <servlet-name>mealServlet</servlet-name>
         <servlet-class>ru.javawebinar.topjava.web.MealServlet</servlet-class>
@@ -15,5 +14,6 @@
     <servlet-mapping>
         <servlet-name>mealServlet</servlet-name>
         <url-pattern>/meals</url-pattern>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 </web-app>
