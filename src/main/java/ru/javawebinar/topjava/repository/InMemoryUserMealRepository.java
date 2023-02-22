@@ -1,17 +1,24 @@
 package ru.javawebinar.topjava.repository;
 
+import ru.javawebinar.topjava.model.Meal;
+import ru.javawebinar.topjava.model.MealTo;
 import ru.javawebinar.topjava.model.UserMeal;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Month;
 import java.util.Collection;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 public class InMemoryUserMealRepository implements UserMealRepository{
     private Map<Integer, UserMeal> repository = new ConcurrentHashMap<Integer, UserMeal>();
     private AtomicInteger counter = new AtomicInteger();
+
+    private final int caloriesPerDay = 2000;
 
     {
         save(new UserMeal(LocalDateTime.of(2020, Month.JANUARY, 30, 10, 0), "Завтрак", 500));

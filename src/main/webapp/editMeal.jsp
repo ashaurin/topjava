@@ -10,8 +10,10 @@
 <body>
 <h3><a href="index.html">Home</a></h3>
 <hr>
-<h2>Edit meal</h2>
+<h2>${param.action == 'create' ? 'Edit meal' : 'Create meal'}</h2>
+
 <jsp:useBean id="meal" class = "ru.javawebinar.topjava.model.UserMeal" scope="request" />
+
 <form method="post" action="meals">
     <input type="hidden" name="id" value="${meal.id}">
     <dl>
@@ -26,8 +28,9 @@
         <dt>DateTime:</dt>
         <dd><input type="number" value="${meal.calories}" name="calories"></dd>
     </dl>
-<button type="submit">Save</button>
-<button onclick="window.history.back()">Cancel</button>
+    <button type="submit">Save</button>
+    <button onclick="window.history.back()">Cancel</button>
 </form>
+
 </body>
 </html>

@@ -28,43 +28,61 @@ public class MealServlet extends HttpServlet {
         repository = new InMemoryUserMealRepository();
     }
 
-    protected void doPost (HttpServletRequest request, HttpServletResponse response) throws javax.servlet.ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
-        String id = request.getParameter("id");
-        UserMeal userMeal = new UserMeal(id.isEmpty() ? null : Integer.valueOf(id),
-                LocalDateTime.parse(request.getParameter("dateTime")),
-                request.getParameter("description"),
-                Integer.valueOf(request.getParameter("calories")));
-        repository.save(userMeal);
-        response.sendRedirect("meals");
-    }
-
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         log.debug("redirect to users");
+        request.setAttribute("mealList", repository.getAll());
+
         String action = request.getParameter("action");
 
-        if (action == null){
-            log.info("getAll");
-            request.getRequestDispatcher("/meals.jsp").forward(request, response);
-
-        } else if (action.equals("delete")){
-            int id = getId(request);
-            log.info("Delete {}", id);
-            repository.delete(id);
-            response.sendRedirect("meals");
-        } else {
-            final UserMeal meal = action.equals("create") ?
-                    new UserMeal(LocalDateTime.now(),"",1000) :
-                    repository.get(getId(request));
-            request.setAttribute("meal", meal);
-            request.getRequestDispatcher("/editMeal.jsp").forward(request, response);
+        switch (action == null ? "all" : action) {
+            case "delete":
+                int id = getId(request);
+                log.info("Delete id={}", id);
+                repository.delete(id);
+                response.sendRedirect("meals");
+                break;
+            case "update":
+                final UserMeal meal2 = new UserMeal( LocalDateTime.now(),"",1000);
+                request.setAttribute("meal", meal2);
+                request.getRequestDispatcher("/editMeal.jsp").forward(request, response);
+                break;
+            case "create":
+                final UserMeal meal = repository.get(getId(request));
+                request.setAttribute("meal", meal);
+                request.getRequestDispatcher("/editMeal.jsp").forward(request, response);
+                break;
+            case "all":
+            case "info":
+                log.info("getAll");
+                request.getRequestDispatcher("/meals.jsp").forward(request, response);
+                break;
         }
     }
 
+
     private int getId (HttpServletRequest request){
         String paramId = Objects.requireNonNull(request.getParameter("id"));
-        return Integer.valueOf(paramId);
+        return Integer.parseInt(paramId);
+    }
+
+    protected void doPost (HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
+        request.setCharacterEncoding("UTF-8");
+        String action = request.getParameter("action");
+        String id = request.getParameter("id");
+
+        if ("submit".equals(action)) {
+            UserMeal userMeal = new UserMeal(id.isEmpty() ? null : Integer.valueOf(id),
+                    LocalDateTime.parse(request.getParameter("dateTime")),
+                    request.getParameter("description"),
+                    Integer.parseInt(request.getParameter("calories")));
+
+
+            repository.save(userMeal);
+
+            response.sendRedirect("meals");
+        }
     }
 }
 
