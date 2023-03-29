@@ -42,13 +42,13 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
-            <version>5.1.10.RELEASE</version>
+            <version>5.3.25</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.1.10.RELEASE</version>
+            <version>5.3.25</version>
         </dependency>
 
         <dependency>
@@ -96,20 +96,20 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
-            <version>5.2.3.RELEASE</version>
+            <version>5.3.25</version>
             <scope>test</scope>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>5.2.2.RELEASE</version>
+            <version>5.3.25</version>
         </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
-            <version>5.2.2.RELEASE</version>
+            <version>5.3.25</version>
         </dependency>
         <dependency>
             <groupId>org.hsqldb</groupId>
@@ -176,7 +176,6 @@
             <artifactId>postgresql</artifactId>
             <version>42.2.14</version>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-jpa</artifactId>
@@ -258,7 +257,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>2.12.4</version>
                 <configuration>
-                    <argLine>-Dfile.encoding=UTF-8</argLine>
+                    <argLine>-Defile.encoding=UTF-8</argLine>
                 </configuration>
             </plugin>
         </plugins>
